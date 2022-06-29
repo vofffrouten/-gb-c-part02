@@ -62,13 +62,13 @@ class Stack
         {
             for (size_t i = 0; i < size; i++)
             {
+                pos = 0;
                 array [i] = 0;
             }
         }
 
         Stack ()        // конструктор
         {
-            pos = 0;
             reset();
         }
 
@@ -85,15 +85,18 @@ class Stack
             return true;
         }
 
-        void pop ()
+        int pop ()
         {
+            int buf;
             if (pos == 0)
             {
                 std::cout << "stack is empty\n";
-                return;
+                return 0;
             }
             pos --;
+            buf = array[pos]
             array[pos] = 0;
+            return buf;
         }
 
         void print ()
