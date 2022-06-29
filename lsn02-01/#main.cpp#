@@ -1,0 +1,139 @@
+#include <iostream>
+#include <cmath>
+#include <cstdint>
+
+class Power
+{
+    double a;
+    double b;
+
+    public:
+        Power() : a (10), b (2) {}
+
+        ~Power () {}
+
+        void set(double a, double b)
+        {
+            this -> a = a;
+            this -> b = b;
+        }
+
+        void calculate()
+        {
+	  std::cout << a << "^" << b << " = " << pow(a, b) << "\n";
+        }
+};
+
+class RGBA
+{
+    std::uint8_t m_red;
+    std::uint8_t m_green;
+    std::uint8_t m_blue;
+    std::uint8_t m_alpha;
+
+    public:
+        RGBA() : m_red (0), m_green (0), m_blue (0), m_alpha (255) {}
+
+        RGBA(uint8_t red, uint8_t green, uint8_t blue, uint8_t alpha) : 
+             m_red (red), m_green (green), m_blue (blue), m_alpha (alpha) {}
+
+        ~RGBA () {}
+
+        void print ()
+        {
+            std::cout << "RED: " << m_red << " "
+                      << "GREEN: " << m_green << " " 
+                      << "BLUE: " << m_blue << " "
+                      << "ALPHA: " << m_alpha << "\n"; 
+        }
+
+
+};
+
+class Stack
+{
+    private:                    //написал pivate ради разнообразия
+        const size_t size = 10; //не уверен, что это верно. писал следуя "матеркам" компилятора 
+        int array [10];
+        int pos;                 
+    
+    public:
+        void reset()
+        {
+            for (size_t i = 0; i < size; i++)
+            {
+                array [i] = 0;
+            }
+        }
+
+        Stack ()        // конструктор
+        {
+            pos = 0;
+            reset();           
+        }
+
+        ~Stack () {}
+        
+        bool push(int num) 
+        {
+            if (pos == size)
+            {
+                return false;
+            }
+            array[pos] = num;
+            pos ++;            
+            return true;
+        }
+
+        void pop ()
+        {
+            if (pos == 0)
+            {
+                std::cout << "stack is empty\n";
+                return;
+            }            
+            pos --;
+            array[pos] = 0;
+        }
+
+        void print ()
+        {
+            std::cout << "(";
+            for (size_t i = 0; i < pos; i++)
+            {
+                std::cout << array [i];
+            }
+            std::cout << ")\n";        
+        }
+};
+
+int main ()
+{
+    /*
+    Power p;
+    p.set(5.3, 5);
+    p.calculate();
+
+    RGBA rgba { 71, 79, 79, 100};
+    rgba.print();
+    */
+   
+    Stack stack;
+
+    stack.reset();
+    stack.print();
+
+    stack.push(3);
+    stack.push(7);
+    stack.push(5);
+    stack.print();
+
+    stack.pop();
+    stack.print();
+
+    stack.pop();
+    stack.pop();
+    stack.print();
+
+    return 0;
+}
