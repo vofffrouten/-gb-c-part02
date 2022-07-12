@@ -195,16 +195,18 @@ public:
     }
 };
 
-enum Suit { HEARTS = 1, CLUBS, DIAMONDS, SPADES };
+// ========== BLACK JACK ==========
+
+enum CardSuit { HEARTS = 1, CLUBS, DIAMONDS, SPADES };
 enum CardRank { ACE = 1, TWO, THREE, FOUR, FIVE, SIX, SEVEN,
-                EIGHT, NINE, TEN, JACK, QUEEN, KING };
+                EIGHT, NINE, TEN, JACK = 10, QUEEN = 10, KING = 10};
 
 class Card {
-    int suit;
-    int rank;
+    CardSuit suit;
+    CardRank rank;
     bool faceUp;
 public:
-    Card (int _suit, int _rank, bool _faceUp) : 
+    Card (CardSuit _suit, CardRank _rank, bool _faceUp) : 
         suit (_suit), rank (_rank), faceUp (_faceUp) {} //конструктор пока что пустой
 
     void Flip () {
@@ -232,7 +234,7 @@ int main () {
     Bus car03 ("volvo", "g976");
     Minivan car04 ("hyundai", "h1");
 
-    Card firstCard(HEARTS, ACE, 0); 
+    Card firstCard(HEARTS, EIGHT, 0); 
     
     std::cout << firstCard.GetValue() << "\n";
 
