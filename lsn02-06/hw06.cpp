@@ -20,7 +20,7 @@ void firstTask () {
     }
 }
 
-//seconTask манипулятор endll
+//seconTask манипулятор endll 
 std::ostream& endll(std::ostream &out) {
     out << "\n\n";
     std::cout.flush();

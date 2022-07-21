@@ -49,9 +49,9 @@ public:
     }
 };
 
-std::ostream& Card::operator<< (std::ostream& out, Card& card){  
+std::ostream& operator<< (std::ostream& out, Card& card){  
     if (card.faceUpCheck()) {
-        out << card.rank << " " << card.suit;  //переписать! пока что выводит "шифровки из центра"
+        out << card.rank << " " << card.suit;  //переписать! пока что выводит "шифровки из центра" типа 1,2,3 и тд
     } else {
         out << "XX";
     }
@@ -67,12 +67,12 @@ public:
     }
 
     void clear () {
-    std::vector<Card*>::iterator i = cardsInHand.begin();
-    for (i = cardsInHand.begin(); i <= cardsInHand.end(); ++i)
-    {
-        delete *i;
-        *i = 0;
-    }
+        std::vector<Card*>::iterator i = cardsInHand.begin();
+        for (i = cardsInHand.begin(); i <= cardsInHand.end(); ++i)
+        {
+            delete *i;
+            *i = 0;
+        }
         cardsInHand.clear();
     }
 
@@ -115,6 +115,26 @@ public:
     }
 };
 
+// без указания имени класса перед переопределением оператора 
+// не дает второй раз переопределить:
+// error: redefinition of ‘std::ostream& operator<<(std::ostream&, GenericPlayer&)’
+// 118 | std::ostream& operator<< (std::ostream& out, GenericPlayer& player){
+
+//также в этой функции недоступны переменные класса, только функции
+//перечитал всё что нашел в интернетах. солюшен у всех один: прописывать имя класса GenericPlayer::operator<<
+//а у меня так не пашет ( пАмАгИтЕ ещё немножка пажалста...
+
+std::ostream& operator<< (std::ostream& out, GenericPlayer& player){ 
+    out << "  " << player.name;
+    std::vector<Card*>::iterator i = player.cardsInHand.begin();
+    for (i = player.cardsInHand.begin(); i <= player.cardsInHand.end(); ++i)
+    {
+        out << *(*i) << " ";
+    }
+    out << "  " << player.getValue ();
+    return out;
+}
+
 class Player : public GenericPlayer{
 public:
     bool isHitting() const override {
@@ -152,22 +172,6 @@ public:
     }
 };
 
-//не хочет перегружать в самом классе. 
-//не дает поставить второй операнд Card& card
-
-
-//подсмотрел в методичке, что можно через френд работать с классом
-//но gcc не дает так сделать все равно
-// error: redefinition of ‘std::ostream& operator<<(std::ostream&, GenericPlayer&)’
-// std::ostream& operator<< (std::ostream& out, GenericPlayer& player){
-
-std::ostream& operator<< (std::ostream& out, GenericPlayer& player){ 
-//    out << player.name << ""; is protected within this context out << player.name << ""; даже если включаю friend в классе
-//    
-
-    out << "  " << player.getValue ();
-    return out;
-}
 
 int main () {
     Player pl01;
