@@ -92,7 +92,7 @@ public:
 
 class GenericPlayer : public Hand {
 private:
-    friend std::ostream& operator<< (std::ostream& out, GenericPlayer& player){}
+    friend std::ostream& operator<< (std::ostream& out, GenericPlayer& player);
 protected:
     std::string name;
 public:
